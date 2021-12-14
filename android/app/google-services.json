@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "988536271763",
+    "project_id": "moviesdbaia",
+    "storage_bucket": "moviesdbaia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988536271763:android:7a372efbb08bdb40666e66",
+        "android_client_info": {
+          "package_name": "com.example.moviesaia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988536271763-odcd0rol9bse3gm0gm3r12sb6f5pmt36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpheRDjGWtWJ7HMtoW0qjApiY7262I8Ns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988536271763-odcd0rol9bse3gm0gm3r12sb6f5pmt36.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "988536271763-levq7fm37rq4dsp5mngqtu54lsnpjj6r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moviesaia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

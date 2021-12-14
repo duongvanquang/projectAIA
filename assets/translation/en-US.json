@@ -1,0 +1,63 @@
+{
+    "loginscreen": {
+        "email": "Email",
+        "password": "Password",
+        "sigin": "Sig In",
+        "forgotpassword": "Forgot Password ?",
+        "siginusing": "or Sign In using",
+        "facebook": "Facebook",
+        "or": "or",
+        "google": "Google +",
+        "donthaveaccount": "Don't have an account?",
+        "signup": "Sign Up",
+        "invalidemail": "Invalid email",
+        "accountnotfound": "Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol",
+        "incorrectpassword": "Incorrect password"
+    },
+    "signupscreen": {
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "signup": "Sign Up",
+        "forgot password": "Forgot Password?",
+        "siginusing": "or Sign In using",
+        "facebook": "Facebook",
+        "or": "or",
+        "google": "Google +",
+        "donthaveaccount": "Don't have an account?",
+        "sigin": "Sig In",
+        "invalidfullname": "Full name at least 2 characters",
+        "invalidpassword": "Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol.",
+        "invalidemail": "Invalid email",
+        "existaccount": "existAccount"
+    },
+    "onboarding": {
+        "title": "Movies & Services",
+        "description": "The world's most popular and authoritative source for movies and services",
+        "button": "Explore Collecttion"
+    },
+    "discoverscreen": {
+        "headertitle": "Discover",
+        "popular": "Most Popular",
+        "recent": "Most Recent",
+        "commingsoon": "Comming Soon",
+        "seeall": "See All"
+    },
+    "genresscreen": {
+        "headertitle": "Genres",
+        "genresadventure": " Adventure",
+        "genresanimation": "Animation",
+        "genresdrama": "Drama",
+        "nowplaying": "now_playing",
+        "popular": "popular",
+        "toprated": "top_rated",
+        "upcoming": "upcoming",
+        "imageAnimationTV": "animationTV",
+        "imageSciTV": "sciTV",
+        "imagecomdy": "comedy",
+        "imageromance": "romance"
+    },
+    "artistsscreen": {
+        "headertitle": "Artists"
+    }
+}
