@@ -23,7 +23,8 @@ class _DetailGenresTypeScreenState extends State<DetailGenresTypeScreen> {
   late ScrollController _controllerpage;
   int _nextpage = 1;
   void _loadmore() {
-    if (_controllerpage.position.extentAfter == 0) {
+    if (_controllerpage.position.pixels ==
+        _controllerpage.position.maxScrollExtent) {
       _nextpage++;
       BlocProvider.of<GenresBloc>(context).add(
         LoadMorePageDataMoviested(

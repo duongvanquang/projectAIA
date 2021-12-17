@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
-import '../blocs/detail/detailtv_bloc.dart';
-import '../blocs/detail/detailtv_event.dart';
+import '../blocs/detailmovie/detailmovie_bloc.dart';
+import '../blocs/detailmovie/detailmovie_event.dart';
 import '../model/movies_configuration.dart';
 import '../model/movies_model.dart';
 import '../theme/color_theme.dart';
@@ -34,10 +34,10 @@ class _ItemPopularState extends State<ItemPopular> {
           if (state is ConfigurationStartSuccess) {
             return InkWell(
               onTap: () {
-                context.read<DetailtvBloc>().add(DetailStartted(
+                context.read<DetailMovieBloc>().add(DetailStartted(
                       id: widget.movie!.id,
                     ));
-                Navigator.of(context).pushNamed('/detail_tv');
+                Navigator.of(context).pushNamed('/detail_movie');
               },
               child: Card(
                 shape: RoundedRectangleBorder(

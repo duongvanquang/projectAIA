@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-abstract class DetailtvEvent extends Equatable {
-  const DetailtvEvent();
+abstract class DetailMovieEvent extends Equatable {
+  const DetailMovieEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class DetailStartted extends DetailtvEvent {
+class DetailStartted extends DetailMovieEvent {
   final int id;
   const DetailStartted({required this.id});
   @override

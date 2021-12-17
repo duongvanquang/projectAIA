@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/personid/personid_bloc.dart';
 import '../blocs/personid/personid_state.dart';
+import '../constants/api_constants.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';
 import '../widgtes/custom_tabbar_view.dart';
@@ -53,7 +56,7 @@ class DetailPersonIdScreen extends StatelessWidget {
                     },
                   ),
                   Positioned(
-                      top: h / 4,
+                      top: h / 3.5,
                       left: w / 12,
                       child: Text(
                         detailperson.name!,
@@ -63,7 +66,7 @@ class DetailPersonIdScreen extends StatelessWidget {
                             .copyWith(color: ColorsTheme.primaryWhite),
                       )),
                   Positioned(
-                      top: h / 3.3,
+                      top: h / 2.9,
                       left: w / 8,
                       child: Text(
                         detailperson.popularity.toString(),
@@ -80,47 +83,97 @@ class DetailPersonIdScreen extends StatelessWidget {
                         child: const Icon(Icons.navigate_before,
                             size: 40, color: ColorsTheme.primaryWhite),
                       )),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
-                        builder: (context, state) => SizedBox(
-                              height: 150,
-                              width: double.infinity,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const ScrollPhysics(),
-                                  itemCount: detailperson.personImage!.length,
-                                  itemBuilder: (context, index) {
-                                    final itemImage =
-                                        detailperson.personImage![index];
-                                    return BlocBuilder<ConfigurationBloc,
-                                        ConfigurationState>(
-                                      builder: (context, state) {
-                                        if (state
-                                            is ConfigurationStartSuccess) {
-                                          return Card(
-                                              child: CachedNetworkImage(
-                                            imageUrl:
-                                                '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${itemImage.filePath}''',
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Container(
-                                              decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/img_not_found.png'),
-                                                ),
-                                              ),
-                                            ),
-                                          ));
-                                        }
-                                        return const SizedBox.shrink();
-                                      },
+                  Row(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            height: 150,
+                            child: Image(
+                                color: ColorsTheme.blueColor.withOpacity(0.6),
+                                image: NetworkImage(ApiConstant.baseImage +
+                                    detailperson.profilePath!)),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/image_photo');
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  detailperson.personImage!.length.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .copyWith(
+                                          color: ColorsTheme.primaryWhite),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  '+',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .copyWith(
+                                          color: ColorsTheme.primaryWhite),
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 150,
+                        child: Image(
+                            image: NetworkImage(ApiConstant.baseImage +
+                                detailperson.personImage![0].filePath!)),
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisExtent:
+                                        (state.personId.personImage?.length ??
+                                                    0) <=
+                                                2
+                                            ? 150
+                                            : 75),
+                            itemCount:
+                                state.personId.personImage?.take(4).length ?? 0,
+                            itemBuilder: (context, index) {
+                              final itemImage =
+                                  detailperson.personImage![index];
+                              return BlocBuilder<ConfigurationBloc,
+                                  ConfigurationState>(
+                                builder: (context, state) {
+                                  if (state is ConfigurationStartSuccess) {
+                                    return CachedNetworkImage(
+                                      imageUrl:
+                                          '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${itemImage.filePath}''',
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/img_not_found.png'),
+                                          ),
+                                        ),
+                                      ),
                                     );
-                                  }),
-                            )),
+                                  }
+                                  return const SizedBox.shrink();
+                                },
+                              );
+                            }),
+                      ),
+                    ],
                   ),
                 ]),
                 const Expanded(

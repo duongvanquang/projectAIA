@@ -1,6 +1,8 @@
 import '../helper/iterable_helper.dart';
-
 import '../helper/string_helper.dart';
+import 'cast_model.dart';
+import 'review_model.dart';
+import 'trailer_model.dart';
 
 class DetailTvModel {
   final String? backdropPath;
@@ -21,9 +23,13 @@ class DetailTvModel {
   final String? type;
   final double voteAverage;
   final int? voteCount;
-  const DetailTvModel(
+  List<CastModel>? castmodel;
+  List<ReviewModel>? reviewmodel;
+  List<TrailerModel>? trailerModel;
+  DetailTvModel(
       {required this.voteAverage,
       this.homepage,
+      this.trailerModel,
       this.numberOfEpisodes,
       this.numberOfSeasons,
       this.originCountry,
@@ -39,6 +45,8 @@ class DetailTvModel {
       this.id,
       this.backdropPath,
       this.lastAirDate,
+      this.castmodel,
+      this.reviewmodel,
       this.name});
   factory DetailTvModel.fromJson(Map<String, dynamic> json) {
     final getBackdropPath = stringHelper(json['backdrop_path']);

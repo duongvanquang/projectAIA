@@ -21,13 +21,10 @@ class CustomSeeAll extends StatelessWidget {
                   .headline4!
                   .copyWith(color: ColorsTheme.blueColor)),
           const SizedBox(width: 15),
-          InkWell(
-            onTap: () {},
-            child: const Icon(
-              Icons.skip_next,
-              size: 32,
-              color: ColorsTheme.blueColor,
-            ),
+          const Icon(
+            Icons.skip_next,
+            size: 32,
+            color: ColorsTheme.blueColor,
           )
         ],
       );

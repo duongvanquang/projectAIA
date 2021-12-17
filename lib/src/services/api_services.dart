@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:moviesaia/src/model/detail_tv_model.dart';
-
 import '../constants/api_constants.dart';
+import '../model/cast_model.dart';
 import '../model/credit_model.dart';
+import '../model/detail_tv_model.dart';
 import '../model/discover_model.dart';
 import '../model/movies_model.dart';
 import '../model/person_model.dart';
 import '../model/photo_image_model.dart';
+import '../model/review_model.dart';
+import '../model/trailer_model.dart';
 import '../model/trending_model.dart';
 import 'http_client.dart';
 
@@ -96,18 +98,83 @@ class ApiServices {
   }
 
   Future<DetailTvModel> getDetailMovieData(int id) async {
-    final bodyDetailTvData = await HttpClient(baseUrl: ApiConstant.baseUrl)
+    final bodyDetailMovieData = await HttpClient(baseUrl: ApiConstant.baseUrl)
         .getData('3/movie/$id', {'api_key': ApiConstant.apiKey});
-    final getDetailTvData = json.decode(bodyDetailTvData);
-    final detailTVData = DetailTvModel.fromJson(getDetailTvData);
-    return detailTVData;
+    final getDetailMovieData = json.decode(bodyDetailMovieData);
+    final detailMovieData = DetailTvModel.fromJson(getDetailMovieData)
+      ..castmodel = await getCastData(id)
+      ..reviewmodel = await getDataReview(id)
+      ..trailerModel = await getDataTrailerMovie(id);
+    return detailMovieData;
   }
 
   Future<DetailTvModel> getDetailTvData(int id) async {
     final bodyDetailTvData = await HttpClient(baseUrl: ApiConstant.baseUrl)
         .getData('3/tv/$id', {'api_key': ApiConstant.apiKey});
     final getDetailTvData = json.decode(bodyDetailTvData);
-    final detailTVData = DetailTvModel.fromJson(getDetailTvData);
+    final detailTVData = DetailTvModel.fromJson(getDetailTvData)
+      ..castmodel = await getCastTvData(id)
+      ..reviewmodel = await getDataTVReview(id)
+      ..trailerModel = await getDataTrailerTV(id);
     return detailTVData;
+  }
+
+  Future<List<CastModel>> getCastData(int id) async {
+    final bodyCastData = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('3/movie/$id/credits', {'api_key': ApiConstant.apiKey});
+    final getCastData = json.decode(bodyCastData);
+    final List castData = Map<String, dynamic>.from(getCastData)['cast'];
+    return castData.map<CastModel>((json) => CastModel.fromJson(json)).toList();
+  }
+
+  Future<List<CastModel>> getCastTvData(int id) async {
+    final bodyCastData = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('3/tv/$id/credits', {'api_key': ApiConstant.apiKey});
+    final getCastData = json.decode(bodyCastData);
+    final List castData = Map<String, dynamic>.from(getCastData)['cast'];
+    return castData.map<CastModel>((json) => CastModel.fromJson(json)).toList();
+  }
+
+  Future<List<ReviewModel>> getDataReview(int id) async {
+    final bodyDataReview = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('/3/movie/$id/reviews', {'api_key': ApiConstant.apiKey});
+    final getDataReview = json.decode(bodyDataReview);
+    final List reviewData = Map<String, dynamic>.from(getDataReview)['results'];
+    return reviewData
+        .map<ReviewModel>((json) => ReviewModel.fromJson(json))
+        .toList();
+  }
+
+  Future<List<ReviewModel>> getDataTVReview(int id) async {
+    final bodyDataTVReview = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('/3/tv/$id/reviews', {'api_key': ApiConstant.apiKey});
+    final getDataTVReview = json.decode(bodyDataTVReview);
+    final List reviewTVData =
+        Map<String, dynamic>.from(getDataTVReview)['results'];
+    return reviewTVData
+        .map<ReviewModel>((json) => ReviewModel.fromJson(json))
+        .toList();
+  }
+
+  Future<List<TrailerModel>> getDataTrailerMovie(int id) async {
+    final bodyDataTrailerMovie = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('/3/movie/$id/videos', {'api_key': ApiConstant.apiKey});
+    final getDataTrailerMovie = json.decode(bodyDataTrailerMovie);
+    final List dataTrailerMovie =
+        Map<String, dynamic>.from(getDataTrailerMovie)['results'];
+    return dataTrailerMovie
+        .map<TrailerModel>((json) => TrailerModel.fromJson(json))
+        .toList();
+  }
+
+  Future<List<TrailerModel>> getDataTrailerTV(int id) async {
+    final bodyDataTrailerTV = await HttpClient(baseUrl: ApiConstant.baseUrl)
+        .getData('/3/tv/$id/videos', {'api_key': ApiConstant.apiKey});
+    final getDataTrailerTV = json.decode(bodyDataTrailerTV);
+    final List dataTrailerTV =
+        Map<String, dynamic>.from(getDataTrailerTV)['results'];
+    return dataTrailerTV
+        .map<TrailerModel>((json) => TrailerModel.fromJson(json))
+        .toList();
   }
 }

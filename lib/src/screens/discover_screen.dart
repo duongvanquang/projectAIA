@@ -60,8 +60,13 @@ class DiscoverScreen extends StatelessWidget {
                             const SizedBox(height: 15),
                             Padding(
                                 padding: const EdgeInsets.only(right: 10),
-                                child: CustomSeeAll(
-                                  title: tr('discoverscreen.commingsoon'),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('/see_all');
+                                  },
+                                  child: CustomSeeAll(
+                                    title: tr('discoverscreen.commingsoon'),
+                                  ),
                                 )),
                             const SizedBox(height: 10),
                             SizedBox(

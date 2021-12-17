@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
@@ -24,6 +25,7 @@ class MoviesTabbarView extends StatelessWidget {
             );
           } else if (state is PersonIdLoadInSuccess) {
             return ListView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: state.personId.creditCart!.length,
                 itemBuilder: (context, index) {
                   final item = state.personId.creditCart![index];
