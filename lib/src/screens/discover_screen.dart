@@ -38,13 +38,16 @@ class DiscoverScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              tr('discoverscreen.popular'),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(color: ColorsTheme.primaryBlack),
-                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('/see_all');
+                                  },
+                                  child: CustomSeeAll(
+                                    title: tr('discoverscreen.popular'),
+                                  ),
+                                )),
                             const SizedBox(height: 10),
                             SizedBox(
                               height: 350,

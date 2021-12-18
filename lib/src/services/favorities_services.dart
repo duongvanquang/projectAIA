@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ApiFavorities {
   final FirebaseAuth auth = FirebaseAuth.instance;
-
   final CollectionReference recipeCollection =
       FirebaseFirestore.instance.collection('favorities');
   Future<void> favorities(

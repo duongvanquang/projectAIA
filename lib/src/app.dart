@@ -12,17 +12,7 @@ import 'blocs/onboarding/onboarding_bloc.dart';
 import 'blocs/person/person_bloc.dart';
 import 'blocs/personid/personid_bloc.dart';
 import 'blocs/user/user_bloc.dart';
-import 'screens/bottom_appbar.dart';
-import 'screens/detail_commingsoon.dart';
-import 'screens/detail_genrestype_screen.dart';
-import 'screens/detail_movie_screen.dart';
-import 'screens/detail_personid.dart';
-import 'screens/homescreen.dart';
-import 'screens/image_photo_screen.dart';
-import 'screens/loginscreen.dart';
-import 'screens/onboarding.dart';
-import 'screens/see_all_screen.dart';
-import 'screens/signupscreen.dart';
+import 'route_name/route_name.dart';
 import 'services/api_services.dart';
 import 'services/configuration_services.dart';
 import 'services/favorities_services.dart';
@@ -57,23 +47,19 @@ class App extends StatelessWidget {
           BlocProvider.value(value: _favoritiesBloc)
         ],
         child: MaterialApp(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: MoviesTheme.buildTheme(),
-          routes: {
-            '/': (context) => const LoginScreen(),
-            '/signup': (context) => const SignupScreen(),
-            '/home': (context) => const HomeScreen(),
-            '/onboarding': (context) => const OnboardingScreen(),
-            '/bottom_tapbar': (context) => const BottomTapBar(),
-            '/genres_type': (context) => const DetailGenresTypeScreen(),
-            '/detail_personid': (context) => const DetailPersonIdScreen(),
-            '/detail_movie': (context) => const DetailMovieScreen(),
-            '/detail_commingsoon': (context) => const DetailTVScreen(),
-            '/image_photo': (context) => const ImagePhotoScreen(),
-            '/see_all': (context) => const SeeAllScreen()
-          },
-        ),
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: MoviesTheme.buildTheme(),
+            routes: buildRoutes(),
+            initialRoute: initRouter()),
       );
 }
+
+String initRouter() => isLogin()
+    ? isOnboarding()
+        ? RouteName.bottomTapbar
+        : RouteName.onboading
+    : RouteName.login;
+bool isLogin() => true;
+bool isOnboarding() => true;
