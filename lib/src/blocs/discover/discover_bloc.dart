@@ -30,7 +30,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
           yield DiscoverLoadSuccess(
               discoverdata: _discoverData, commingsoon: _commingSoonData);
         } on Exception {
-          yield DiscoverLoadFailure(error: tr(''));
+          yield DiscoverLoadFailure(error: tr('error'));
         }
     }
   }

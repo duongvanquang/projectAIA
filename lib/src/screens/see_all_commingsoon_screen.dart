@@ -9,8 +9,8 @@ import '../blocs/discover/discover_state.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';
 
-class SeeAllScreen extends StatelessWidget {
-  const SeeAllScreen({Key? key}) : super(key: key);
+class SeeAllTvScreen extends StatelessWidget {
+  const SeeAllTvScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -88,7 +88,7 @@ class SeeAllScreen extends StatelessWidget {
                                 child: Text(item.title!,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline3!
+                                        .headline4!
                                         .copyWith(
                                             color: ColorsTheme.primaryBlack),
                                     textAlign: TextAlign.center,

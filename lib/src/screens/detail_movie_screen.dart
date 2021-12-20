@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/blocs/detailmovie/detailmovie_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
-
-import '../blocs/detailmovie/detailmovie_state.dart';
+import '../blocs/detail_movie/detailmovie_bloc.dart';
+import '../blocs/detail_movie/detailmovie_state.dart';
 import '../blocs/favorities/favorities_bloc.dart';
 import '../blocs/favorities/favorities_event.dart';
+import '../blocs/favorities/favorities_state.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';
 import '../widgtes/custom_tabbar_view.dart';
@@ -26,7 +26,19 @@ class DetailMovieScreen extends StatefulWidget {
   State<DetailMovieScreen> createState() => _DetailMovieScreenState();
 }
 
-bool _currenColor = false;
+void submitSuccess(context, state) {
+  if (state is FavoritiesLoadInSuccess) {
+    if (state.favoritiesSuccess) {
+      Future.delayed(const Duration(seconds: 1), () {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Colors.green,
+            content: Text(
+              'SubmitSuccess',
+            )));
+      });
+    }
+  }
+}
 
 class _DetailMovieScreenState extends State<DetailMovieScreen> {
   @override
@@ -45,23 +57,26 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
             builder: (context, state) {
               if (state is DetailMovieLoadInSuccess) {
                 final item = state.detailMovieModel;
-                return IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _currenColor = !_currenColor;
-                      });
-                      context.read<FavoritiesBloc>().add(FavoritiesStartted(
-                          userName: item.name,
-                          fullName: item.originalName,
-                          type: item.type,
-                          imagePath: item.posterPath,
-                          moviesId: item.id,
-                          moviesName: item.name,
-                          dataTimeCreated: item.lastAirDate));
-                    },
-                    icon: Icon(Icons.favorite,
-                        size: 32,
-                        color: _currenColor ? Colors.white : Colors.red));
+                return BlocConsumer<FavoritiesBloc, FavoritiesState>(
+                  listener: (context, state) {
+                    if (state is FavoritiesLoadInSuccess) {
+                      submitSuccess(context, state);
+                    }
+                  },
+                  builder: (context, state) => IconButton(
+                      onPressed: () {
+                        context.read<FavoritiesBloc>().add(FavoritiesStartted(
+                            userName: item.status,
+                            fullName: item.originalName,
+                            type: item.type,
+                            imagePath: item.posterPath,
+                            moviesId: item.id,
+                            moviesName: item.name,
+                            dataTimeCreated: item.lastAirDate));
+                      },
+                      icon: const Icon(Icons.favorite,
+                          size: 32, color: Colors.blue)),
+                );
               }
               return const SizedBox.shrink();
             },

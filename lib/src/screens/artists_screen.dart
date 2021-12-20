@@ -18,7 +18,7 @@ class ArtistsScreen extends StatelessWidget {
       child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size(double.infinity, 200),
-            child: CustomHeader(title: tr('artistsscreen.headertitle')),
+            child: CustomHeader(title: tr('artists.headertitle')),
           ),
           body: BlocBuilder<PersonBloc, PersonState>(
             builder: (context, state) {

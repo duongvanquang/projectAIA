@@ -14,7 +14,7 @@ class GenresScreen extends StatelessWidget {
           child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size(double.infinity, 200),
-          child: CustomHeader(title: tr('genresscreen.headertitle')),
+          child: CustomHeader(title: tr('genres.headertitle')),
         ),
         body: Container(
           color: ColorsTheme.secondaryGrey,

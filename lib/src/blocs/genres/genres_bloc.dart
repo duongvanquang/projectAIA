@@ -29,7 +29,7 @@ class GenresBloc extends Bloc<GenresEvent, GenresState> {
               .getMoviesData(loadmore.genreType, loadmore.nextpage);
           yield GenresLoadInSuccess(movies: loadmoreMovies);
         } on Exception {
-          yield GenresLoadInFailure(error: tr(''));
+          yield GenresLoadInFailure(error: tr('error'));
         }
     }
   }

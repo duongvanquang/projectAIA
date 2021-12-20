@@ -1,5 +1,5 @@
 {
-    "loginscreen": {
+    "login": {
         "email": "Email",
         "password": "Password",
         "sigin": "Sig In",
@@ -14,7 +14,7 @@
         "accountnotfound": "Password should have more than 8 characters,\nincluding number, lower and upper character,\nand special symbol",
         "incorrectpassword": "Incorrect password"
     },
-    "signupscreen": {
+    "signup": {
         "name": "Name",
         "email": "Email",
         "password": "Password",
@@ -31,19 +31,19 @@
         "invalidemail": "Invalid email",
         "existaccount": "existAccount"
     },
-    "onboardingscreen": {
+    "onboarding": {
         "title": "Movies & Services",
         "description": "The world's most popular and authoritative source for movies and services",
         "button": "Explore Collecttion"
     },
-    "discoverscreen": {
+    "discover": {
         "headertitle": "Discover",
         "popular": "Most Popular",
         "recent": "Most Recent",
         "commingsoon": "Comming Soon",
         "seeall": "See All"
     },
-    "genresscreen": {
+    "genres": {
         "headertitle": "Genres",
         "genresadventure": " Adventure",
         "genresanimation": "Animation",
@@ -57,7 +57,7 @@
         "imagecomdy": "comedy",
         "imageromance": "romance"
     },
-    "artistsscreen": {
+    "artists": {
         "headertitle": "Artists"
     }
 }

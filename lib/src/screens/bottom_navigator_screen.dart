@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesaia/src/theme/color_theme.dart';
+import '../theme/color_theme.dart';
 
 import 'artists_screen.dart';
 import 'discover_screen.dart';

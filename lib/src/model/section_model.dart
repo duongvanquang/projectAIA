@@ -9,21 +9,21 @@ class Section {
 
 List<Section> genresSection = [
   Section(
-      image: tr('genresscreen.imageSciTV'),
-      title: tr('genresscreen.genresadventure'),
-      genreType: tr('genresscreen.nowplaying')),
+      image: tr('genres.imageSciTV'),
+      title: tr('genres.genresadventure'),
+      genreType: tr('genres.nowplaying')),
   Section(
-      image: tr('genresscreen.imageAnimationTV'),
+      image: tr('genres.imageAnimationTV'),
       title: tr(
-        'genresscreen.genresanimation',
+        'genres.genresanimation',
       ),
-      genreType: tr('genresscreen.popular')),
+      genreType: tr('genres.popular')),
   Section(
-      image: tr('genresscreen.imagecomdy'),
-      title: tr('genresscreen.genresdrama'),
-      genreType: tr('genresscreen.toprated')),
+      image: tr('genres.imagecomdy'),
+      title: tr('genres.genresdrama'),
+      genreType: tr('genres.toprated')),
   Section(
-      image: tr('genresscreen.imageromance'),
-      title: tr('genresscreen.upcoming'),
-      genreType: tr('genresscreen.upcoming'))
+      image: tr('genres.imageromance'),
+      title: tr('genres.upcoming'),
+      genreType: tr('genres.upcoming'))
 ];

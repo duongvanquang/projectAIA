@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/personid/personid_bloc.dart';
-import '../blocs/personid/personid_state.dart';
+import '../blocs/person_id/personid_bloc.dart';
+import '../blocs/person_id/personid_state.dart';
 import '../theme/color_theme.dart';
 
 class SummaryTabbarView extends StatelessWidget {

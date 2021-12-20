@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
-import '../blocs/personid/personid_bloc.dart';
-import '../blocs/personid/personid_state.dart';
+import '../blocs/person_id/personid_bloc.dart';
+import '../blocs/person_id/personid_state.dart';
 import '../constants/api_constants.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';

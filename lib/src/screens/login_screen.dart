@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  tr('loginscreen.email'),
+                  tr('login.email'),
                   style: Theme.of(context)
                       .textTheme
                       .headline5!
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      tr('loginscreen.password'),
+                      tr('login.password'),
                       style: Theme.of(context)
                           .textTheme
                           .headline5!
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                       ),
                       child: Text(
-                        tr('loginscreen.sigin'),
+                        tr('login.sigin'),
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    tr('loginscreen.forgotpassword'),
+                    tr('login.forgotpassword'),
                     style: Theme.of(context)
                         .textTheme
                         .headline4!
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                       ),
                       child: Text(
-                        tr('loginscreen.facebook'),
+                        tr('login.facebook'),
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                       ),
                       child: Text(
-                        tr('loginscreen.google'),
+                        tr('login.google'),
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(tr('loginscreen.donthaveaccount'),
+                    Text(tr('login.donthaveaccount'),
                         style: Theme.of(context)
                             .textTheme
                             .headline5!
@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.of(context).pushNamed('/signup');
                         },
-                        child: Text(tr('loginscreen.signup'),
+                        child: Text(tr('login.signup'),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline4!
@@ -222,11 +222,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void _checkLogin(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserEmailSubmitFailure:
-        _textEmailError = tr('loginscreen.invalidemail');
+        _textEmailError = tr('loginidemail');
         _textPasswordError = null;
         break;
       case UserPasswordSubmitFailure:
-        _textPasswordError = tr('loginscreen.accountnotfound');
+        _textPasswordError = tr('login.accountnotfound');
         _textEmailError = null;
         break;
       case UserAuthFailure:
@@ -234,16 +234,16 @@ class _LoginScreenState extends State<LoginScreen> {
         _textEmailError = null;
         _textPasswordError = null;
         if (state.exception == FirebaseCode.userNotFound.code) {
-          _textEmailError = tr('loginscreen.invalidemail');
+          _textEmailError = tr('login.invalidemail');
         } else if (state.exception == FirebaseCode.userWrongPassword.code) {
-          _textPasswordError = tr('loginscreen.incorrectpassword');
+          _textPasswordError = tr('login.incorrectpassword');
         }
         break;
       case UserLoginSuccess:
         _textEmailError = null;
         _textPasswordError = null;
         Future.delayed(const Duration(microseconds: 200),
-            () => Navigator.of(context).pushNamed('/onboarding'));
+            () => Navigator.of(context).pushNamed('/onboading'));
     }
   }
 

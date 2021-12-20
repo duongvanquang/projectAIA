@@ -17,7 +17,7 @@ class PersonBloc extends Bloc<PersonEvent, PersonState> {
           final getPersonData = await personData!.getPersonData();
           yield PersonLoadInSuccess(personModel: getPersonData);
         } on Exception {
-          yield PersonLoadInFailure(error: tr(''));
+          yield PersonLoadInFailure(error: tr('error'));
         }
     }
   }

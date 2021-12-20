@@ -16,7 +16,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
           final trendingData = await apiServices!.getTrendingData();
           yield OnboardingLoadSuccess(trendingModel: trendingData);
         } on Exception {
-          yield OnboardingLoadFailure(error: tr(''));
+          yield OnboardingLoadFailure(error: tr('error'));
         }
     }
   }

@@ -15,7 +15,7 @@ class CustomSeeAll extends StatelessWidget {
                   .headline3!
                   .copyWith(color: ColorsTheme.primaryBlack)),
           const Spacer(),
-          Text(tr('discoverscreen.seeall'),
+          Text(tr('discover.seeall'),
               style: Theme.of(context)
                   .textTheme
                   .headline4!

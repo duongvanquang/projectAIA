@@ -40,10 +40,6 @@ class AuthorDetails {
     final getName = stringHelper(json['name']);
     final getUsername = stringHelper(json['username']);
     final getAvatarPath = stringHelper(json['avatar_path']);
-
-    // if (json['rating'] != null) {
-    //   getRating = json['rating'];
-    // }
     return AuthorDetails(
         name: getName,
         username: getUsername,

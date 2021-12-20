@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
-import '../blocs/detailmovie/detailmovie_state.dart';
-import '../blocs/detailtv/detail_bloc.dart';
-import '../blocs/detailtv/detail_state.dart';
+import '../blocs/detail_movie/detailmovie_state.dart';
+import '../blocs/detail_tv/detail_bloc.dart';
+import '../blocs/detail_tv/detail_state.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';
 

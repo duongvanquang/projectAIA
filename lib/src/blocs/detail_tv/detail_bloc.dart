@@ -21,7 +21,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
             detailCommingSoon: detailCommingSoon,
           );
         } on Exception {
-          yield DetailCommingSoonLoadInFailure(error: tr(''));
+          yield DetailCommingSoonLoadInFailure(error: tr('error'));
         }
     }
   }

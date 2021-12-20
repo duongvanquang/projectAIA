@@ -18,7 +18,12 @@ class CustomHeader extends StatelessWidget {
                   .copyWith(color: ColorsTheme.secondaryGrey),
             ),
             const SizedBox(width: 130),
-            const Icon(Icons.search, size: 35, color: ColorsTheme.blueColor)
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/search');
+                },
+                child: const Icon(Icons.search,
+                    size: 35, color: ColorsTheme.blueColor))
           ],
         ),
       );

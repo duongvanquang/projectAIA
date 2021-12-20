@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/blocs/detailmovie/detailmovie_bloc.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
-
-import '../blocs/detailmovie/detailmovie_state.dart';
+import '../blocs/detail_movie/detailmovie_bloc.dart';
+import '../blocs/detail_movie/detailmovie_state.dart';
 import '../theme/color_theme.dart';
 import 'rating_widget.dart';
 

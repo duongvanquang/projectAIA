@@ -8,6 +8,7 @@ import '../model/movies_model.dart';
 import '../model/person_model.dart';
 import '../model/photo_image_model.dart';
 import '../model/review_model.dart';
+import '../model/search_model.dart';
 import '../model/trailer_model.dart';
 import '../model/trending_model.dart';
 import '../utils/rest_client.dart';
@@ -28,6 +29,8 @@ abstract class MoviesDBService {
   Future<List<TrailerModel>> getDataTrailerMovie(int id);
   Future<List<TrailerModel>> getDataTrailerTV(int id);
   Future<List<ReviewModel>> getDataTVReview(int id);
+  Future<List<SearchModel>> getDataSearchMulti(int page, String query);
+  Future<List<Movie>> getMoviesData(String? section, int? page);
 }
 
 class ApiServices extends MoviesDBService {
@@ -65,9 +68,10 @@ class ApiServices extends MoviesDBService {
     return responseList.map<Movie>((json) => Movie.fromJson(json)).toList();
   }
 
+  @override
   Future<List<Movie>> getMoviesData(String? section, int? page) async {
-    final bodyMoviesData =
-        await HttpClientServices.httpClient().getData('/3/movie/$section');
+    final bodyMoviesData = await HttpClientServices.httpClient()
+        .getData('/3/movie/$section', params: {'page': page.toString()});
     final getMoviesData = json.decode(bodyMoviesData);
     final List responseList =
         Map<String, dynamic>.from(getMoviesData)['results'];
@@ -206,6 +210,20 @@ class ApiServices extends MoviesDBService {
         Map<String, dynamic>.from(getDataTrailerTV)['results'];
     return dataTrailerTV
         .map<TrailerModel>((json) => TrailerModel.fromJson(json))
+        .toList();
+  }
+
+  @override
+  Future<List<SearchModel>> getDataSearchMulti(int page, String query) async {
+    final bodyDataSearchMulti = await HttpClientServices.httpClient().getData(
+        '/3/search/multi/',
+        params: {'query': query, 'page': page.toString()});
+    final getDataSearchMulti = json.decode(bodyDataSearchMulti);
+    final List dataSearch =
+        Map<String, dynamic>.from(getDataSearchMulti)['results'];
+    // debugPrint(bodyDataSearchMulti);
+    return dataSearch
+        .map<SearchModel>((json) => SearchModel.fromJson(json))
         .toList();
   }
 }

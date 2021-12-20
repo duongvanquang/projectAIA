@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:moviesaia/src/model/movies_model.dart';
+import '../../model/movies_model.dart';
 
 abstract class GenresState extends Equatable {
   const GenresState();

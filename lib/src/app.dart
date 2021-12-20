@@ -1,16 +1,17 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/blocs/search/search_bloc.dart';
 
 import 'blocs/configuration/configuration_bloc.dart';
-import 'blocs/detailmovie/detailmovie_bloc.dart';
-import 'blocs/detailtv/detail_bloc.dart';
+import 'blocs/detail_movie/detailmovie_bloc.dart';
+import 'blocs/detail_tv/detail_bloc.dart';
 import 'blocs/discover/discover_bloc.dart';
 import 'blocs/favorities/favorities_bloc.dart';
 import 'blocs/genres/genres_bloc.dart';
 import 'blocs/onboarding/onboarding_bloc.dart';
 import 'blocs/person/person_bloc.dart';
-import 'blocs/personid/personid_bloc.dart';
+import 'blocs/person_id/personid_bloc.dart';
 import 'blocs/user/user_bloc.dart';
 import 'route_name/route_name.dart';
 import 'services/api_services.dart';
@@ -32,6 +33,8 @@ class App extends StatelessWidget {
   final _detailTvBloc = DetailMovieBloc(services: ApiServices());
   final _detailCommingSoonBloc = DetailBloc(services: ApiServices());
   final _favoritiesBloc = FavoritiesBloc(apiFavorities: ApiFavorities());
+  final _searchBloc = SearchBloc(
+      services: ApiServices(), configurationServices: ConfigurationServices());
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
@@ -44,7 +47,8 @@ class App extends StatelessWidget {
           BlocProvider.value(value: _personIdBloc),
           BlocProvider.value(value: _detailTvBloc),
           BlocProvider.value(value: _detailCommingSoonBloc),
-          BlocProvider.value(value: _favoritiesBloc)
+          BlocProvider.value(value: _favoritiesBloc),
+          BlocProvider.value(value: _searchBloc)
         ],
         child: MaterialApp(
             localizationsDelegates: context.localizationDelegates,

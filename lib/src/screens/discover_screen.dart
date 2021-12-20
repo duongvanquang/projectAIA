@@ -21,7 +21,7 @@ class DiscoverScreen extends StatelessWidget {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size(double.infinity, 200),
-          child: CustomHeader(title: tr('discoverscreen.headertitle')),
+          child: CustomHeader(title: tr('discover.headertitle')),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -42,10 +42,11 @@ class DiscoverScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 10),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed('/see_all');
+                                    Navigator.of(context)
+                                        .pushNamed('/see_all_discover');
                                   },
                                   child: CustomSeeAll(
-                                    title: tr('discoverscreen.popular'),
+                                    title: tr('discover.popular'),
                                   ),
                                 )),
                             const SizedBox(height: 10),
@@ -65,10 +66,11 @@ class DiscoverScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(right: 10),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed('/see_all');
+                                    Navigator.of(context)
+                                        .pushNamed('/see_all_commingsoon');
                                   },
                                   child: CustomSeeAll(
-                                    title: tr('discoverscreen.commingsoon'),
+                                    title: tr('discover.commingsoon'),
                                   ),
                                 )),
                             const SizedBox(height: 10),

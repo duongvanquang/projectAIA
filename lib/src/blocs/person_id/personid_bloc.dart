@@ -19,7 +19,7 @@ class PersonidBloc extends Bloc<PersonidEvent, PersonidState> {
           final personIdData = await personid!.getPersonIdData(idPerson.id!);
           yield PersonIdLoadInSuccess(personId: personIdData);
         } on Exception {
-          yield PersonIdLoadInFailure(error: tr(''));
+          yield PersonIdLoadInFailure(error: tr('error'));
         }
     }
   }

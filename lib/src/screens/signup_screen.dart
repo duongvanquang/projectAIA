@@ -38,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tr('signupscreen.name'),
+                    tr('signup.name'),
                     style: Theme.of(context)
                         .textTheme
                         .headline5!
@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 30),
                   Text(
-                    tr('signupscreen.email'),
+                    tr('signup.email'),
                     style: Theme.of(context)
                         .textTheme
                         .headline5!
@@ -104,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     children: [
                       Text(
-                        tr('signupscreen.password'),
+                        tr('signup.password'),
                         style: Theme.of(context)
                             .textTheme
                             .headline5!
@@ -155,7 +155,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           )),
                         ),
                         child: Text(
-                          tr('signupscreen.signup'),
+                          tr('signup.signup'),
                           style: Theme.of(context)
                               .textTheme
                               .headline3!
@@ -166,7 +166,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      tr('signupscreen.forgotpassword'),
+                      tr('signup.forgotpassword'),
                       style: Theme.of(context)
                           .textTheme
                           .headline4!
@@ -194,7 +194,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           )),
                         ),
                         child: Text(
-                          tr('signupscreen.facebook'),
+                          tr('signup.facebook'),
                           style: Theme.of(context)
                               .textTheme
                               .headline3!
@@ -222,7 +222,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           )),
                         ),
                         child: Text(
-                          tr('signupscreen.google'),
+                          tr('signup.google'),
                           style: Theme.of(context)
                               .textTheme
                               .headline3!
@@ -233,7 +233,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(tr('signupscreen.donthaveaccount'),
+                      Text(tr('signup.donthaveaccount'),
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
@@ -243,7 +243,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           onPressed: () {
                             Navigator.of(context).pushNamed('/');
                           },
-                          child: Text(tr('signupscreen.sigin'),
+                          child: Text(tr('signup.sigin'),
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4!
@@ -260,24 +260,24 @@ class _SignupScreenState extends State<SignupScreen> {
   void _checkSignUp(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserFullNameSubmitFailure:
-        _textFullNameError = tr('signupscreen.invalidfullname');
+        _textFullNameError = tr('signup.invalidfullname');
         _textEmailError = null;
         _textPasswordError = null;
         break;
       case UserEmailSubmitFailure:
-        _textEmailError = tr('signupscreen.invalidemail');
+        _textEmailError = tr('signup.invalidemail');
         _textFullNameError = null;
         _textPasswordError = null;
         break;
       case UserPasswordSubmitFailure:
-        _textPasswordError = tr('signupscreen.invalidpassword');
+        _textPasswordError = tr('signup.invalidpassword');
         _textFullNameError = null;
         _textEmailError = null;
         break;
       case UserAuthFailure:
         state as UserAuthFailure;
         if (state.exception == FirebaseCode.userAlreadyExists.code) {
-          _textEmailError = tr('signupscreen.existAccount');
+          _textEmailError = tr('signup.existaccount');
           _textFullNameError = null;
           _textPasswordError = null;
         }

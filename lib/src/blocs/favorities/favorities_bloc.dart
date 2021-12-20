@@ -26,7 +26,7 @@ class FavoritiesBloc extends Bloc<FavoritiesEvent, FavoritiesState> {
               favoritiesData.dataTimeCreated);
           yield FavoritiesLoadInSuccess(favoritiesSuccess: !favoritiesSuccess);
         } on Exception {
-          yield FavoritiesLoadInFailure(error: tr(''));
+          yield FavoritiesLoadInFailure(error: tr('error'));
         }
     }
   }

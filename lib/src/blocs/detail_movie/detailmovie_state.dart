@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:moviesaia/src/model/review_model.dart';
+
 import '../../model/detail_tv_model.dart';
 
 abstract class DetailMovieState extends Equatable {
