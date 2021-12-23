@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import '../model/cast_model.dart';
 import '../model/credit_model.dart';
 import '../model/detail_tv_model.dart';
@@ -53,6 +55,7 @@ class ApiServices extends MoviesDBService {
     final getDiscoverdata = json.decode(bodyDiscoverData);
     final List responseList =
         Map<String, dynamic>.from(getDiscoverdata)['results'];
+
     return responseList
         .map<DiscoverModel>((json) => DiscoverModel.fromJson(json))
         .toList();
@@ -221,7 +224,6 @@ class ApiServices extends MoviesDBService {
     final getDataSearchMulti = json.decode(bodyDataSearchMulti);
     final List dataSearch =
         Map<String, dynamic>.from(getDataSearchMulti)['results'];
-    // debugPrint(bodyDataSearchMulti);
     return dataSearch
         .map<SearchModel>((json) => SearchModel.fromJson(json))
         .toList();

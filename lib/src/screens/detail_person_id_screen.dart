@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/person_id/personid_bloc.dart';
+import '../blocs/person_id/personid_event.dart';
 import '../blocs/person_id/personid_state.dart';
 import '../constants/api_constants.dart';
 import '../model/movies_configuration.dart';
@@ -19,10 +21,15 @@ class DetailPersonIdScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    AppDependencies.injector
+        .get<PersonidBloc>()
+        .add(PersonIdStartted(id: arg['id']));
     final h = MediaQuery.of(context).size.height;
     final w = MediaQuery.of(context).size.width;
     return Scaffold(
       body: BlocBuilder<PersonidBloc, PersonidState>(
+        bloc: AppDependencies.injector.get<PersonidBloc>(),
         builder: (context, state) {
           if (state is PersonIdLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -32,6 +39,7 @@ class DetailPersonIdScreen extends StatelessWidget {
               children: [
                 Stack(alignment: Alignment.bottomCenter, children: [
                   BlocBuilder<ConfigurationBloc, ConfigurationState>(
+                    bloc: AppDependencies.injector.get<ConfigurationBloc>(),
                     builder: (context, state) {
                       if (state is ConfigurationStartSuccess) {
                         return CachedNetworkImage(
@@ -149,6 +157,8 @@ class DetailPersonIdScreen extends StatelessWidget {
                                   detailperson.personImage![index];
                               return BlocBuilder<ConfigurationBloc,
                                   ConfigurationState>(
+                                bloc: AppDependencies.injector
+                                    .get<ConfigurationBloc>(),
                                 builder: (context, state) {
                                   if (state is ConfigurationStartSuccess) {
                                     return CachedNetworkImage(

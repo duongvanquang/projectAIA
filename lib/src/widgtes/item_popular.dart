@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
@@ -9,6 +10,7 @@ import '../blocs/detail_movie/detailmovie_bloc.dart';
 import '../blocs/detail_movie/detailmovie_event.dart';
 import '../model/movies_configuration.dart';
 import '../model/movies_model.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 
 class ItemPopular extends StatefulWidget {
@@ -23,21 +25,28 @@ class ItemPopular extends StatefulWidget {
 class _ItemPopularState extends State<ItemPopular> {
   @override
   void initState() {
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
+    AppDependencies.injector.get<DetailMovieBloc>().add(DetailStartted(
+          id: widget.movie!.id,
+        ));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        bloc: AppDependencies.injector.get<ConfigurationBloc>(),
         builder: (context, state) {
           if (state is ConfigurationStartSuccess) {
             return InkWell(
               onTap: () {
-                context.read<DetailMovieBloc>().add(DetailStartted(
-                      id: widget.movie!.id,
-                    ));
-                Navigator.of(context).pushNamed('/detail_movie');
+                // context.read<DetailMovieBloc>().add(DetailStartted(
+                //       id: widget.movie!.id,
+                //     ));
+                Navigator.of(context).pushNamed(RouteName.detailMovie,
+                    arguments: {'id': widget.movie!.id});
               },
               child: Card(
                 shape: RoundedRectangleBorder(

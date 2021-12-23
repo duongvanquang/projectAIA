@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/person_id/personid_bloc.dart';
@@ -17,6 +18,7 @@ class MoviesTabbarView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: ColorsTheme.secondaryGrey,
       body: BlocBuilder<PersonidBloc, PersonidState>(
+        bloc: AppDependencies.injector.get<PersonidBloc>(),
         builder: (context, state) {
           if (state is PersonIdLoadInProgress) {
             return const Center(
@@ -39,6 +41,7 @@ class MoviesTabbarView extends StatelessWidget {
                       elevation: 5,
                       margin: const EdgeInsets.all(6),
                       child: BlocBuilder<ConfigurationBloc, ConfigurationState>(
+                        bloc: AppDependencies.injector.get<ConfigurationBloc>(),
                         builder: (context, state) {
                           if (state is ConfigurationStartSuccess) {
                             return Column(

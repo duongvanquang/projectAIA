@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../app_dependencies.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
@@ -16,10 +17,13 @@ class ItemCastCommingSoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
     return Scaffold(
       backgroundColor: ColorsTheme.secondaryGrey,
       body: BlocBuilder<DetailBloc, DetailState>(
+        bloc: AppDependencies.injector.get<DetailBloc>(),
         builder: (context, state) {
           if (state is DetailMovieLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -36,6 +40,7 @@ class ItemCastCommingSoon extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = state.detailCommingSoon.castmodel![index];
                 return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+                  bloc: AppDependencies.injector.get<ConfigurationBloc>(),
                   builder: (context, state) {
                     if (state is ConfigurationStartSuccess) {
                       return SizedBox(

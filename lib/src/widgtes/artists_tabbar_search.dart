@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/search/search_bloc.dart';
@@ -19,6 +20,7 @@ class ArtistsTabbarSearch extends StatefulWidget {
 class _ArtistsTabbarSearchState extends State<ArtistsTabbarSearch> {
   @override
   Widget build(BuildContext context) => BlocBuilder<SearchBloc, SearchState>(
+        bloc: AppDependencies.injector.get<SearchBloc>(),
         builder: (context, state) {
           if (state is SearchLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -40,6 +42,8 @@ class _ArtistsTabbarSearchState extends State<ArtistsTabbarSearch> {
                     child: Column(
                       children: [
                         BlocBuilder<ConfigurationBloc, ConfigurationState>(
+                          bloc:
+                              AppDependencies.injector.get<ConfigurationBloc>(),
                           builder: (context, state) {
                             if (state is ConfigurationStartSuccess) {
                               return CachedNetworkImage(

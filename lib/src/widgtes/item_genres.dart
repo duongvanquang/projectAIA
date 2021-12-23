@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../model/movies_configuration.dart';
@@ -15,6 +16,7 @@ class ItemGenres extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        bloc: AppDependencies.injector.get<ConfigurationBloc>(),
         builder: (context, state) {
           if (state is ConfigurationStartSuccess) {
             return Card(

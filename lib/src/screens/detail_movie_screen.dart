@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
+import 'package:moviesaia/src/blocs/detail_movie/detailmovie_event.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
@@ -43,8 +45,15 @@ void submitSuccess(context, state) {
 class _DetailMovieScreenState extends State<DetailMovieScreen> {
   @override
   Widget build(BuildContext context) {
+    final _favoritiesBloc = AppDependencies.injector.get<FavoritiesBloc>();
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    AppDependencies.injector.get<DetailMovieBloc>().add(DetailStartted(
+          id: arg['id'],
+        ));
     final h = MediaQuery.of(context).size.height;
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -54,10 +63,12 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
             icon: const Icon(Icons.arrow_back_ios, size: 32)),
         actions: [
           BlocBuilder<DetailMovieBloc, DetailMovieState>(
+            bloc: AppDependencies.injector.get<DetailMovieBloc>(),
             builder: (context, state) {
               if (state is DetailMovieLoadInSuccess) {
                 final item = state.detailMovieModel;
                 return BlocConsumer<FavoritiesBloc, FavoritiesState>(
+                  bloc: _favoritiesBloc,
                   listener: (context, state) {
                     if (state is FavoritiesLoadInSuccess) {
                       submitSuccess(context, state);
@@ -65,7 +76,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                   },
                   builder: (context, state) => IconButton(
                       onPressed: () {
-                        context.read<FavoritiesBloc>().add(FavoritiesStartted(
+                        _favoritiesBloc.add(FavoritiesStartted(
                             userName: item.status,
                             fullName: item.originalName,
                             type: item.type,
@@ -85,6 +96,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
       ),
       extendBodyBehindAppBar: true,
       body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+        bloc: AppDependencies.injector.get<DetailMovieBloc>(),
         builder: (context, state) {
           if (state is DetailMovieLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -92,6 +104,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
             final item = state.detailMovieModel;
             final convertRatingToFiveUnits = item.voteAverage / 2;
             return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+              bloc: AppDependencies.injector.get<ConfigurationBloc>(),
               builder: (context, state) {
                 if (state is ConfigurationStartSuccess) {
                   return SizedBox(

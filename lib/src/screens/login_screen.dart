@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/route_name/route_name.dart';
 
 import '../blocs/user/user_bloc.dart';
 import '../blocs/user/user_event.dart';
@@ -9,6 +10,7 @@ import '../enum/enums_firebase.dart';
 import '../theme/color_theme.dart';
 import '../widgtes/custom_divider.dart';
 import '../widgtes/custom_image_login.dart';
+import '../app_dependencies.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -41,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       .copyWith(color: ColorsTheme.secondaryGrey),
                 ),
                 BlocBuilder<UserBloc, UserState>(
+                  bloc: AppDependencies.injector.get<UserBloc>(),
                   builder: (context, state) {
                     _checkLogin(context, state);
                     return TextField(
@@ -80,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 BlocBuilder<UserBloc, UserState>(
+                  bloc: AppDependencies.injector.get<UserBloc>(),
                   builder: (context, state) {
                     _checkLogin(context, state);
                     return TextField(
@@ -205,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(width: 10),
                     TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed('/signup');
+                          Navigator.of(context).pushNamed(RouteName.signup);
                         },
                         child: Text(tr('login.signup'),
                             style: Theme.of(context)
@@ -222,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _checkLogin(BuildContext context, UserState state) {
     switch (state.runtimeType) {
       case UserEmailSubmitFailure:
-        _textEmailError = tr('loginidemail');
+        _textEmailError = tr('login.invalidemail');
         _textPasswordError = null;
         break;
       case UserPasswordSubmitFailure:
@@ -243,13 +247,13 @@ class _LoginScreenState extends State<LoginScreen> {
         _textEmailError = null;
         _textPasswordError = null;
         Future.delayed(const Duration(microseconds: 200),
-            () => Navigator.of(context).pushNamed('/onboading'));
+            () => Navigator.of(context).pushNamed(RouteName.onboading));
     }
   }
 
   void _checkButtonLogin(BuildContext context) {
-    context
-        .read<UserBloc>()
+    AppDependencies.injector
+        .get<UserBloc>()
         .add(UserLoginButtonSubmitted(email: _email, password: _password));
   }
 }

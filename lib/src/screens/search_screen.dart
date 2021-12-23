@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
 
 import '../blocs/search/search_bloc.dart';
 import '../blocs/search/search_event.dart';
@@ -28,12 +29,14 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void initState() {
-    context.read<SearchBloc>().add(const SearchResultsChanged());
+    AppDependencies.injector
+        .get<SearchBloc>()
+        .add(const SearchResultsChanged());
     super.initState();
   }
 
   void _textFieldOnChangedCallback(String text) {
-    final _searchBloc = context.read<SearchBloc>();
+    final _searchBloc = AppDependencies.injector.get<SearchBloc>();
 
     if (text.isNotEmpty) {
       _searchBloc.add(SearchStartted(textvalue: text));

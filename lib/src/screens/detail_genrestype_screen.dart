@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/genres/genres_bloc.dart';
 import '../blocs/genres/genres_event.dart';
 import '../blocs/genres/genres_state.dart';
@@ -22,11 +23,12 @@ class DetailGenresTypeScreen extends StatefulWidget {
 class _DetailGenresTypeScreenState extends State<DetailGenresTypeScreen> {
   late ScrollController _controllerpage;
   int _nextpage = 1;
+  final _genresBloc = AppDependencies.injector.get<GenresBloc>();
   void _loadmore() {
     if (_controllerpage.position.pixels ==
         _controllerpage.position.maxScrollExtent) {
       _nextpage++;
-      BlocProvider.of<GenresBloc>(context).add(
+      _genresBloc.add(
         LoadMorePageDataMoviested(
             nextpage: _nextpage, genreType: widget.genreType!),
       );
@@ -37,6 +39,7 @@ class _DetailGenresTypeScreenState extends State<DetailGenresTypeScreen> {
   void initState() {
     super.initState();
     _controllerpage = ScrollController()..addListener(_loadmore);
+    _genresBloc.add(GenresSectionStartted(genreType: widget.genreType!));
   }
 
   @override
@@ -78,6 +81,7 @@ class _DetailGenresTypeScreenState extends State<DetailGenresTypeScreen> {
         ),
       ),
       body: BlocBuilder<GenresBloc, GenresState>(
+        bloc: _genresBloc,
         builder: (context, state) {
           if (state is GenresLoadInProgress) {
             return const Center(

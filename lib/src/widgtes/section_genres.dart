@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/genres/genres_bloc.dart';
 import '../blocs/genres/genres_event.dart';
 import '../screens/detail_genrestype_screen.dart';
@@ -31,7 +31,8 @@ class SectionGenres extends StatelessWidget {
                   )),
         );
 
-        BlocProvider.of<GenresBloc>(context)
+        AppDependencies.injector
+            .get<GenresBloc>()
             .add(GenresSectionStartted(genreType: genreType!));
       },
       child: Stack(

@@ -25,7 +25,7 @@ Map<String, WidgetBuilder> buildRoutes() => {
       RouteName.imagePhoto: (context) => const ImagePhotoScreen(),
       RouteName.seeAllDiscoverData: (context) => const SeeAllTvScreen(),
       RouteName.seeAllCommingSoonData: (context) => const SeeAllMovieScreen(),
-      RouteName.search: (context) => const SearchScreen()
+      RouteName.search: (context) => const SearchScreen(),
     };
 
 mixin RouteName {

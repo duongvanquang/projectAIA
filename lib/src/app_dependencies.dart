@@ -4,12 +4,12 @@ import 'blocs/dependencies.dart';
 import 'services/dependencies_services.dart';
 
 class AppDependencies {
-  static Injector injector = AppDependencies().initialise(Injector());
+  static Injector injector = Injector();
 
-  Injector initialise(Injector injector) {
+  Injector initialise() {
     DependencieService.initialise(injector);
 
-    Dependencies.initialise(injector);
+    DependenciesBloc.initialise(injector);
 
     return injector;
   }

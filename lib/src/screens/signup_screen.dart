@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
 
 import '../blocs/user/user_bloc.dart';
 import '../blocs/user/user_event.dart';
@@ -45,6 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         .copyWith(color: ColorsTheme.secondaryGrey),
                   ),
                   BlocBuilder<UserBloc, UserState>(
+                    bloc: AppDependencies.injector.get<UserBloc>(),
                     builder: (context, state) {
                       _checkSignUp(context, state);
                       return TextField(
@@ -77,6 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         .copyWith(color: ColorsTheme.secondaryGrey),
                   ),
                   BlocBuilder<UserBloc, UserState>(
+                    bloc: AppDependencies.injector.get<UserBloc>(),
                     builder: (context, state) {
                       _checkSignUp(context, state);
                       return TextField(
@@ -116,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ],
                   ),
                   BlocBuilder<UserBloc, UserState>(
+                    bloc: AppDependencies.injector.get<UserBloc>(),
                     builder: (context, state) {
                       _checkSignUp(context, state);
                       return TextField(
@@ -293,7 +297,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void checkButtonSignUp(BuildContext context) {
-    context.read<UserBloc>().add(UserSignupButtonSubmitted(
+    AppDependencies.injector.get<UserBloc>().add(UserSignupButtonSubmitted(
         email: _email.trim(), password: _password, fullname: _fullName));
   }
 }

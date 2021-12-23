@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app.dart';
+import 'src/app_dependencies.dart';
 import 'src/utils/app_init.dart';
 
 Future<void> main() async {
@@ -10,6 +11,7 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   await AppInit().init();
+  AppDependencies().initialise();
   runApp(EasyLocalization(
       supportedLocales: const [
         Locale('en', 'US'),
@@ -17,5 +19,5 @@ Future<void> main() async {
       ],
       path: 'assets/translation',
       startLocale: const Locale('en', 'US'),
-      child: App()));
+      child: const App()));
 }

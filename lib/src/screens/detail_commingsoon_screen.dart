@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
+import 'package:moviesaia/src/blocs/detail_tv/detail_event.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
@@ -46,8 +48,15 @@ void submitSuccess(context, state) {
 class _DetailTvScreenState extends State<DetailTvScreen> {
   @override
   Widget build(BuildContext context) {
+    final detailBloc = AppDependencies.injector.get<DetailBloc>();
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    detailBloc.add(DetailCoomingSoonStartted(id: arg['id']));
+    final favoritiesBloc = AppDependencies.injector.get<FavoritiesBloc>();
+
     final h = MediaQuery.of(context).size.height;
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -57,10 +66,12 @@ class _DetailTvScreenState extends State<DetailTvScreen> {
             icon: const Icon(Icons.arrow_back_ios, size: 32)),
         actions: [
           BlocBuilder<DetailBloc, DetailState>(
+            bloc: detailBloc,
             builder: (context, state) {
               if (state is DetailCommingSoonLoadInSuccess) {
                 final item = state.detailCommingSoon;
                 return BlocConsumer<FavoritiesBloc, FavoritiesState>(
+                  bloc: favoritiesBloc,
                   listener: (context, state) {
                     if (state is FavoritiesLoadInSuccess) {
                       submitSuccess(context, state);
@@ -68,7 +79,7 @@ class _DetailTvScreenState extends State<DetailTvScreen> {
                   },
                   builder: (context, state) => IconButton(
                       onPressed: () {
-                        context.read<FavoritiesBloc>().add(FavoritiesStartted(
+                        favoritiesBloc.add(FavoritiesStartted(
                             userName: item.name,
                             fullName: item.originalName,
                             type: item.type,
@@ -88,6 +99,7 @@ class _DetailTvScreenState extends State<DetailTvScreen> {
       ),
       extendBodyBehindAppBar: true,
       body: BlocBuilder<DetailBloc, DetailState>(
+        bloc: detailBloc,
         builder: (context, state) {
           if (state is DetailCommingSoonLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -95,6 +107,7 @@ class _DetailTvScreenState extends State<DetailTvScreen> {
             final item = state.detailCommingSoon;
             final convertRatingToFiveUnits = item.voteAverage / 2;
             return BlocBuilder<ConfigurationBloc, ConfigurationState>(
+              bloc: AppDependencies.injector.get<ConfigurationBloc>(),
               builder: (context, state) {
                 if (state is ConfigurationStartSuccess) {
                   return SizedBox(

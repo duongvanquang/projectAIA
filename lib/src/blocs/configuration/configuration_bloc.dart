@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import './configuration_event.dart';
 import './configuration_state.dart';
@@ -18,8 +17,8 @@ class ConfigurationBloc extends Bloc<ConfigurationEvent, ConfigurationState> {
               await configurationServices!.getImageConfiguration();
           yield ConfigurationStartSuccess(configurationModel: configuration);
         } on Exception {
-          yield ConfigurationStartFailure(
-              error: tr('homescreen.configurationfailure'));
+          yield const ConfigurationStartFailure(
+              error: 'errorImageConfiguration');
         }
     }
   }

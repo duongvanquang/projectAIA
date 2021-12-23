@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
@@ -20,6 +21,7 @@ class GenresTabbarSearch extends StatefulWidget {
 class _GenresTabbarSearchState extends State<GenresTabbarSearch> {
   @override
   Widget build(BuildContext context) => BlocBuilder<SearchBloc, SearchState>(
+        bloc: AppDependencies.injector.get<SearchBloc>(),
         builder: (context, state) {
           if (state is SearchLoadInProgress) {
             return const Center(child: CircularProgressIndicator());
@@ -42,6 +44,8 @@ class _GenresTabbarSearchState extends State<GenresTabbarSearch> {
                     child: Column(
                       children: [
                         BlocBuilder<ConfigurationBloc, ConfigurationState>(
+                          bloc:
+                              AppDependencies.injector.get<ConfigurationBloc>(),
                           builder: (context, state) {
                             if (state is ConfigurationStartSuccess) {
                               return CachedNetworkImage(

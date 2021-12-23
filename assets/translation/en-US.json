@@ -1,4 +1,8 @@
 {
+    "app": {
+        "disconnected": "disconnected",
+        "connected": "connected"
+    },
     "login": {
         "email": "Email",
         "password": "Password",

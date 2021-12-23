@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/person_id/personid_bloc.dart';
 import '../blocs/person_id/personid_state.dart';
 import '../theme/color_theme.dart';
@@ -12,6 +13,7 @@ class SummaryTabbarView extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: ColorsTheme.secondaryGrey,
         body: BlocBuilder<PersonidBloc, PersonidState>(
+          bloc: AppDependencies.injector.get<PersonidBloc>(),
           builder: (context, state) {
             if (state is PersonIdLoadInProgress) {
               return const Center(child: CircularProgressIndicator());

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/route_name/route_name.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
@@ -24,20 +26,27 @@ class ItemCommingsoon extends StatefulWidget {
 class _ItemCommingsoonState extends State<ItemCommingsoon> {
   @override
   void initState() {
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
+    AppDependencies.injector
+        .get<DetailBloc>()
+        .add(DetailCoomingSoonStartted(id: widget.discoverData!.id!));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<ConfigurationBloc, ConfigurationState>(
+        bloc: AppDependencies.injector.get<ConfigurationBloc>(),
         builder: (context, state) {
           if (state is ConfigurationStartSuccess) {
             return InkWell(
               onTap: () {
-                context.read<DetailBloc>().add(
-                    DetailCoomingSoonStartted(id: widget.discoverData!.id!));
-                Navigator.of(context).pushNamed('/detail_commingsoon');
+                // context.read<DetailBloc>().add(
+                //     DetailCoomingSoonStartted(id: widget.discoverData!.id!));
+                Navigator.of(context).pushNamed(RouteName.detailTv,
+                    arguments: {'id': widget.discoverData!.id!});
               },
               child: Card(
                 shape: RoundedRectangleBorder(

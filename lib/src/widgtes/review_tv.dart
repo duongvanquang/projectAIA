@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/app_dependencies.dart';
 
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
@@ -17,6 +18,7 @@ class ReviewTV extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: ColorsTheme.secondaryGrey,
         body: BlocBuilder<DetailBloc, DetailState>(
+          bloc: AppDependencies.injector.get<DetailBloc>(),
           builder: (context, state) {
             if (state is DetailCommingSoonLoadInProgress) {
               return const Center(
@@ -46,39 +48,44 @@ class ReviewTV extends StatelessWidget {
                                 children: [
                                   BlocBuilder<ConfigurationBloc,
                                           ConfigurationState>(
+                                      bloc: AppDependencies.injector
+                                          .get<ConfigurationBloc>(),
                                       builder: (context, state) {
-                                    if (state is ConfigurationStartSuccess) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${item.authorDetails!.avatarPath}''',
-                                          width: 70,
-                                          height: 70,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                            child: SizedBox(
-                                                child: Center(
-                                                    child:
-                                                        CircularProgressIndicator())),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: AssetImage(
-                                                  'assets/images/img_not_found.png',
+                                        if (state
+                                            is ConfigurationStartSuccess) {
+                                          return ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${item.authorDetails!.avatarPath}''',
+                                              width: 70,
+                                              height: 70,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                child: SizedBox(
+                                                    child: Center(
+                                                        child:
+                                                            CircularProgressIndicator())),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container(
+                                                decoration: const BoxDecoration(
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: AssetImage(
+                                                      'assets/images/img_not_found.png',
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    return const SizedBox.shrink();
-                                  }),
+                                          );
+                                        }
+                                        return const SizedBox.shrink();
+                                      }),
                                   const SizedBox(width: 10),
                                   Column(
                                     children: [

@@ -8,6 +8,7 @@ import '../blocs/person_id/personid_bloc.dart';
 import '../blocs/person_id/personid_state.dart';
 import '../model/movies_configuration.dart';
 import '../theme/color_theme.dart';
+import '../app_dependencies.dart';
 
 class ImagePhotoScreen extends StatelessWidget {
   const ImagePhotoScreen({Key? key}) : super(key: key);
@@ -35,6 +36,7 @@ class ImagePhotoScreen extends StatelessWidget {
         body: Container(
           color: Colors.grey,
           child: BlocBuilder<PersonidBloc, PersonidState>(
+            bloc: AppDependencies.injector.get<PersonidBloc>(),
             builder: (context, state) {
               if (state is PersonIdLoadInProgress) {
                 return const Center(child: CircularProgressIndicator());
@@ -86,6 +88,8 @@ class ImagePhotoScreen extends StatelessWidget {
                             final itemImge = state.personId.personImage![index];
                             return BlocBuilder<ConfigurationBloc,
                                 ConfigurationState>(
+                              bloc: AppDependencies.injector
+                                  .get<ConfigurationBloc>(),
                               builder: (context, state) {
                                 if (state is ConfigurationStartSuccess) {
                                   return CachedNetworkImage(

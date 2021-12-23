@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
@@ -10,6 +11,7 @@ import '../blocs/onboarding/onboarding_bloc.dart';
 import '../blocs/onboarding/onboarding_event.dart';
 import '../blocs/onboarding/onboarding_state.dart';
 import '../model/movies_configuration.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -35,8 +37,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _pageOffset = _pageController!.page;
         });
       });
-    context.read<ConfigurationBloc>().add(ConfigurationStarted());
-    context.read<OnboardingBloc>().add(OnboardingStartted());
+    AppDependencies.injector
+        .get<ConfigurationBloc>()
+        .add(ConfigurationStarted());
+    AppDependencies.injector.get<OnboardingBloc>().add(OnboardingStartted());
     super.initState();
   }
 
@@ -48,75 +52,81 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Stack(
         children: [
           BlocBuilder<OnboardingBloc, OnboardingState>(
+              bloc: AppDependencies.injector.get<OnboardingBloc>(),
               builder: (context, state) {
-            if (state is OnboardingLoadInProgress) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is OnboardingLoadSuccess) {
-              return PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() {
-                      curenindex = index;
-                    });
-                  },
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    final item = state.trendingModel[index];
-                    var angle = (_pageOffset! - index).abs();
-                    if (angle > 0.7) {
-                      angle = 1 - angle;
-                    }
-                    return SizedBox(
-                      width: w,
-                      height: h,
-                      child: Transform(
-                        transform: Matrix4.identity()
-                          ..setEntry(
-                            3,
-                            2,
-                            0.003,
-                          )
-                          ..rotateY(angle),
-                        alignment: Alignment.center,
-                        child: Stack(
-                          children: [
-                            BlocBuilder<ConfigurationBloc, ConfigurationState>(
-                              builder: (context, state) {
-                                if (state is ConfigurationStartSuccess) {
-                                  return CachedNetworkImage(
-                                    imageUrl:
-                                        '''${state.configurationModel.getBackdropSizes(BackdropSize.medium)}${item.backdropPath}''',
-                                    height: h,
-                                    width: w,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => const Center(
-                                      child: SizedBox(
-                                        child: Center(
-                                            child: CircularProgressIndicator()),
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/img_not_found.jpg'),
+                if (state is OnboardingLoadInProgress) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is OnboardingLoadSuccess) {
+                  return PageView.builder(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        setState(() {
+                          curenindex = index;
+                        });
+                      },
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        final item = state.trendingModel[index];
+                        var angle = (_pageOffset! - index).abs();
+                        if (angle > 0.7) {
+                          angle = 1 - angle;
+                        }
+                        return SizedBox(
+                          width: w,
+                          height: h,
+                          child: Transform(
+                            transform: Matrix4.identity()
+                              ..setEntry(
+                                3,
+                                2,
+                                0.003,
+                              )
+                              ..rotateY(angle),
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                BlocBuilder<ConfigurationBloc,
+                                    ConfigurationState>(
+                                  bloc: AppDependencies.injector
+                                      .get<ConfigurationBloc>(),
+                                  builder: (context, state) {
+                                    if (state is ConfigurationStartSuccess) {
+                                      return CachedNetworkImage(
+                                        imageUrl:
+                                            '''${state.configurationModel.getBackdropSizes(BackdropSize.medium)}${item.backdropPath}''',
+                                        height: h,
+                                        width: w,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                          child: SizedBox(
+                                            child: Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                return const SizedBox.shrink();
-                              },
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/img_not_found.jpg'),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-            }
-            return const SizedBox.shrink();
-          }),
+                          ),
+                        );
+                      });
+                }
+                return const SizedBox.shrink();
+              }),
           Positioned(
               top: h / 2.3,
               child: SizedBox(
@@ -151,7 +161,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               left: w / 4,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/bottom_tapbar');
+                  Navigator.of(context).pushNamed(RouteName.bottomTapbar);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -182,6 +192,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             top: h / 1.2,
             left: w / 2.5,
             child: BlocBuilder<OnboardingBloc, OnboardingState>(
+              bloc: AppDependencies.injector.get<OnboardingBloc>(),
               builder: (context, state) {
                 if (state is OnboardingLoadSuccess) {
                   return SizedBox(

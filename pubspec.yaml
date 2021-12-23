@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   global_configuration: ^2.0.0-nullsafety.1
   flutter_simple_dependency_injection: ^2.0.0
+  connectivity: ^3.0.6
 
 dev_dependencies:
   flutter_test:

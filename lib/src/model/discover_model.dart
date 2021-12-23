@@ -12,7 +12,7 @@ class DiscoverModel {
   final String? originalLanguage;
   final String? originalName;
   final String? overview;
-  final double? popularity;
+  final num? popularity;
   final String? posterPath;
 
   final int? voteCount;
@@ -45,11 +45,6 @@ class DiscoverModel {
     if (json['id'] != null) {
       getId = json['id'];
     }
-    var getPopularity = 0.0;
-    if (json['popularity'] != null) {
-      getPopularity = json['popularity'];
-    }
-
     var getVoteCount = 0;
     if (json['vote_count'] != null) {
       getVoteCount = json['vote_count'];
@@ -65,7 +60,7 @@ class DiscoverModel {
       originalLanguage: getOriginalLanguage,
       originalName: getOriginalName,
       overview: getOverview,
-      popularity: getPopularity,
+      popularity: json['popularity'] ?? 0.0,
       posterPath: getPosterPath,
       voteCount: getVoteCount,
     );
