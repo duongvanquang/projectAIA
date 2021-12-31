@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/app_dependencies.dart';
-import 'package:moviesaia/src/route_name/route_name.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/person_id/personid_bloc.dart';
 import '../blocs/person_id/personid_event.dart';
 import '../model/movies_configuration.dart';
 import '../model/person_model.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 
 class ItemPerson extends StatelessWidget {
@@ -33,9 +33,6 @@ class ItemPerson extends StatelessWidget {
             if (state is ConfigurationStartSuccess) {
               return InkWell(
                 onTap: () {
-                  // context
-                  //     .read<PersonidBloc>()
-                  //     .add(PersonIdStartted(id: personModel.id));
                   Navigator.of(context).pushNamed(RouteName.detailPerson,
                       arguments: {'id': personModel.id});
                 },

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../app_dependencies.dart';
-import '../blocs/discover/discover_bloc.dart';
-import '../blocs/person/person_bloc.dart';
 import '../theme/color_theme.dart';
 import 'artists_screen.dart';
 import 'discover_screen.dart';
@@ -19,7 +15,7 @@ class BottomTapBar extends StatefulWidget {
 class _BottomTapBarState extends State<BottomTapBar> {
   int _selectedIndex = 0;
   static final List<Widget> _WidgetOption = [
-    DiscoverScreen(),
+    const DiscoverScreen(),
     const GenresScreen(),
     ArtistsScreen(),
   ];

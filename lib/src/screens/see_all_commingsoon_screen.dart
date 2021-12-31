@@ -1,17 +1,49 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/app_dependencies.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/discover/discover_bloc.dart';
+import '../blocs/discover/discover_event.dart';
 import '../blocs/discover/discover_state.dart';
 import '../model/movies_configuration.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 
-class SeeAllTvScreen extends StatelessWidget {
+class SeeAllTvScreen extends StatefulWidget {
   const SeeAllTvScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SeeAllTvScreen> createState() => _SeeAllTvScreenState();
+}
+
+class _SeeAllTvScreenState extends State<SeeAllTvScreen> {
+  late ScrollController _controllerpage;
+  int _nextpage = 1;
+  final _discoverBloc = AppDependencies.injector.get<DiscoverBloc>();
+  void _loadmore() {
+    if (_controllerpage.position.pixels ==
+        _controllerpage.position.maxScrollExtent) {
+      _nextpage++;
+      _discoverBloc.add(
+        LoadMorePageDatated(nextpage: _nextpage),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    _controllerpage = ScrollController()..addListener(_loadmore);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controllerpage.removeListener(_loadmore);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -41,6 +73,7 @@ class SeeAllTvScreen extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is DiscoverLoadSuccess) {
                 return GridView.builder(
+                    controller: _controllerpage,
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate:
@@ -55,53 +88,62 @@ class SeeAllTvScreen extends StatelessWidget {
                         bloc: AppDependencies.injector.get<ConfigurationBloc>(),
                         builder: (context, state) {
                           if (state is ConfigurationStartSuccess) {
-                            return Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                elevation: 5,
-                                margin: const EdgeInsets.all(5),
-                                child: Column(children: [
-                                  CachedNetworkImage(
-                                    imageUrl:
-                                        '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${item.posterPath}''',
-                                    height: 250,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => const Center(
-                                      child: SizedBox(
-                                        child: Center(
-                                            child: CircularProgressIndicator()),
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    RouteName.detailMovie,
+                                    arguments: {'id': item.id});
+                              },
+                              child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  elevation: 5,
+                                  margin: const EdgeInsets.all(5),
+                                  child: Column(children: [
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          '''${state.configurationModel.getProfileSizes(ProfileSize.medium)}${item.posterPath}''',
+                                      height: 250,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                        child: SizedBox(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        ),
                                       ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                            'assets/images/img_not_found.png',
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                              'assets/images/img_not_found.png',
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 18),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Text(item.title!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4!
-                                            .copyWith(
-                                                color:
-                                                    ColorsTheme.primaryBlack),
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2),
-                                  )
-                                ]));
+                                    const SizedBox(height: 18),
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text(item.title!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  color:
+                                                      ColorsTheme.primaryBlack),
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2),
+                                    )
+                                  ])),
+                            );
                           }
 
                           return const SizedBox.shrink();

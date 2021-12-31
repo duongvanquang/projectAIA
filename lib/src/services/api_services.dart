@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 import '../model/cast_model.dart';
 import '../model/credit_model.dart';
 import '../model/detail_tv_model.dart';
@@ -17,8 +15,8 @@ import '../utils/rest_client.dart';
 
 abstract class MoviesDBService {
   Future<List<TrendingModel>> getTrendingData();
-  Future<List<DiscoverModel>> getDiscoverData();
-  Future<List<Movie>> getCommingsoonData();
+  Future<List<DiscoverModel>> getDiscoverData(int? page);
+  Future<List<Movie>> getCommingsoonData(int? page);
   Future<List<PersonModel>> getPersonData();
   Future<PersonModel> getPersonIdData(int id);
   Future<List<PersonImage>> getPhotoImagePerson(int id);
@@ -49,9 +47,9 @@ class ApiServices extends MoviesDBService {
   }
 
   @override
-  Future<List<DiscoverModel>> getDiscoverData() async {
-    final bodyDiscoverData =
-        await HttpClientServices.httpClient().getData('3/discover/tv');
+  Future<List<DiscoverModel>> getDiscoverData(int? page) async {
+    final bodyDiscoverData = await HttpClientServices.httpClient()
+        .getData('3/discover/tv', params: {'page': page.toString()});
     final getDiscoverdata = json.decode(bodyDiscoverData);
     final List responseList =
         Map<String, dynamic>.from(getDiscoverdata)['results'];
@@ -62,9 +60,9 @@ class ApiServices extends MoviesDBService {
   }
 
   @override
-  Future<List<Movie>> getCommingsoonData() async {
-    final bodyCommingsoonData =
-        await HttpClientServices.httpClient().getData('3/movie/upcoming');
+  Future<List<Movie>> getCommingsoonData(int? page) async {
+    final bodyCommingsoonData = await HttpClientServices.httpClient()
+        .getData('3/movie/upcoming', params: {'page': page.toString()});
     final getCommingsoonData = json.decode(bodyCommingsoonData);
     final List responseList =
         Map<String, dynamic>.from(getCommingsoonData)['results'];

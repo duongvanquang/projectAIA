@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/app_dependencies.dart';
+import '../app_dependencies.dart';
 
 import '../blocs/search/search_bloc.dart';
 import '../blocs/search/search_event.dart';

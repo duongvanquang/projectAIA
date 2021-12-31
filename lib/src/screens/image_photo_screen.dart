@@ -1,14 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviesaia/src/widgtes/zoom_image.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/person_id/personid_bloc.dart';
 import '../blocs/person_id/personid_state.dart';
 import '../model/movies_configuration.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
-import '../app_dependencies.dart';
 
 class ImagePhotoScreen extends StatelessWidget {
   const ImagePhotoScreen({Key? key}) : super(key: key);
@@ -92,25 +94,37 @@ class ImagePhotoScreen extends StatelessWidget {
                                   .get<ConfigurationBloc>(),
                               builder: (context, state) {
                                 if (state is ConfigurationStartSuccess) {
-                                  return CachedNetworkImage(
-                                    imageUrl:
-                                        '''${state.configurationModel.getPosterSize(PosterSize.medium)}${itemImge.filePath}''',
-                                    height: 250,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => const Center(
-                                      child: SizedBox(
-                                        child: Center(
-                                            child: CircularProgressIndicator()),
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => ZoomImgae(
+                                                  image: itemImge.filePath,
+                                                )),
+                                      );
+                                    },
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          '''${state.configurationModel.getPosterSize(PosterSize.medium)}${itemImge.filePath}''',
+                                      height: 250,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                        child: SizedBox(
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        ),
                                       ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              'assets/images/img_not_found.png'),
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'assets/images/img_not_found.png'),
+                                          ),
                                         ),
                                       ),
                                     ),

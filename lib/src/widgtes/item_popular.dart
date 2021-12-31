@@ -42,9 +42,6 @@ class _ItemPopularState extends State<ItemPopular> {
           if (state is ConfigurationStartSuccess) {
             return InkWell(
               onTap: () {
-                // context.read<DetailMovieBloc>().add(DetailStartted(
-                //       id: widget.movie!.id,
-                //     ));
                 Navigator.of(context).pushNamed(RouteName.detailMovie,
                     arguments: {'id': widget.movie!.id});
               },

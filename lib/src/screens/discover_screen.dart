@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/app_dependencies.dart';
+import '../app_dependencies.dart';
 
 import '../blocs/discover/discover_bloc.dart';
 import '../blocs/discover/discover_event.dart';

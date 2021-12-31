@@ -1,16 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/route_name/route_name.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/user/user_bloc.dart';
 import '../blocs/user/user_event.dart';
 import '../blocs/user/user_state.dart';
 import '../enum/enums_firebase.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 import '../widgtes/custom_divider.dart';
 import '../widgtes/custom_image_login.dart';
-import '../app_dependencies.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

@@ -12,6 +12,7 @@ import '../screens/search_screen.dart';
 import '../screens/see%20_all_discover_screen.dart';
 import '../screens/see_all_commingsoon_screen.dart';
 import '../screens/signup_screen.dart';
+import '../widgtes/zoom_image.dart';
 
 Map<String, WidgetBuilder> buildRoutes() => {
       RouteName.login: (context) => const LoginScreen(),
@@ -26,6 +27,7 @@ Map<String, WidgetBuilder> buildRoutes() => {
       RouteName.seeAllDiscoverData: (context) => const SeeAllTvScreen(),
       RouteName.seeAllCommingSoonData: (context) => const SeeAllMovieScreen(),
       RouteName.search: (context) => const SearchScreen(),
+      RouteName.zoomImage: (context) => const ZoomImgae()
     };
 
 mixin RouteName {
@@ -41,4 +43,5 @@ mixin RouteName {
   static String seeAllDiscoverData = '/see_all_discover';
   static String seeAllCommingSoonData = '/see_all_commingsoon';
   static String search = '/search';
+  static String zoomImage = '/Zoom_image';
 }

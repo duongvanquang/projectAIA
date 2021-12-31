@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/route_name/route_name.dart';
 
 import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
@@ -11,6 +10,7 @@ import '../blocs/detail_tv/detail_bloc.dart';
 import '../blocs/detail_tv/detail_event.dart';
 import '../model/discover_model.dart';
 import '../model/movies_configuration.dart';
+import '../route_name/route_name.dart';
 import '../theme/color_theme.dart';
 
 class ItemCommingsoon extends StatefulWidget {
@@ -43,8 +43,6 @@ class _ItemCommingsoonState extends State<ItemCommingsoon> {
           if (state is ConfigurationStartSuccess) {
             return InkWell(
               onTap: () {
-                // context.read<DetailBloc>().add(
-                //     DetailCoomingSoonStartted(id: widget.discoverData!.id!));
                 Navigator.of(context).pushNamed(RouteName.detailTv,
                     arguments: {'id': widget.discoverData!.id!});
               },

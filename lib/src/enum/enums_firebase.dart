@@ -10,7 +10,7 @@ enum FirebaseCode {
   signUpSuccess,
 }
 
-extension throwValueCode on FirebaseCode {
+extension ThrowValueCode on FirebaseCode {
   String get code {
     switch (this) {
       case FirebaseCode.resetPasswordRequested:

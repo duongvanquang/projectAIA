@@ -8,3 +8,13 @@ abstract class DiscoverEvent extends Equatable {
 }
 
 class DiscoverStartted extends DiscoverEvent {}
+
+class LoadMorePageDatated extends DiscoverEvent {
+  final int nextpage;
+
+  const LoadMorePageDatated({
+    required this.nextpage,
+  });
+  @override
+  List<Object> get props => [nextpage];
+}

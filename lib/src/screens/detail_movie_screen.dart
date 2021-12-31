@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviesaia/src/app_dependencies.dart';
-import 'package:moviesaia/src/blocs/detail_movie/detailmovie_event.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../app_dependencies.dart';
 import '../blocs/configuration/configuration_bloc.dart';
 import '../blocs/configuration/configuration_event.dart';
 import '../blocs/configuration/configuration_state.dart';
 import '../blocs/detail_movie/detailmovie_bloc.dart';
+import '../blocs/detail_movie/detailmovie_event.dart';
 import '../blocs/detail_movie/detailmovie_state.dart';
 import '../blocs/favorities/favorities_bloc.dart';
 import '../blocs/favorities/favorities_event.dart';

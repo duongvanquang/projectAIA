@@ -20,15 +20,30 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
           yield DiscoverLoadInProgress();
           await Future.wait([
             apiServices!
-                .getDiscoverData()
+                .getDiscoverData(1)
                 .then((value) => _discoverData = value),
             apiServices!
-                .getCommingsoonData()
+                .getCommingsoonData(1)
                 .then((value) => _commingSoonData = value)
           ]);
 
           yield DiscoverLoadSuccess(
               discoverdata: _discoverData, commingsoon: _commingSoonData);
+        } on Exception {
+          yield DiscoverLoadFailure(error: tr('error'));
+        }
+        break;
+      case LoadMorePageDatated:
+        final loadmore = event as LoadMorePageDatated;
+        try {
+          final loadmoreDataDiscover =
+              await apiServices!.getDiscoverData(loadmore.nextpage);
+          final loadmoreDataComming =
+              await apiServices!.getCommingsoonData(loadmore.nextpage);
+          yield DiscoverLoadSuccess(
+            discoverdata: loadmoreDataDiscover,
+            commingsoon: loadmoreDataComming,
+          );
         } on Exception {
           yield DiscoverLoadFailure(error: tr('error'));
         }
